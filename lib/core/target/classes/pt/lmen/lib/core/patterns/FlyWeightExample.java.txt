@@ -1,0 +1,9 @@
+FlyWeight<String, String> pool = new FlyWeight<>(  );
+        String key = "EUR";        
+        String eurP = pool.fromPool( key, key );
+		String key1 = "E_UR".replaceAll( "_", "" );         
+        String eurP1 = pool.fromPool( key1, key1 );
+                
+        Assert.assertEquals( key, eurP );
+        Assert.assertEquals( key1, eurP1 );
+        Assert.assertEquals( eurP, eurP1 );

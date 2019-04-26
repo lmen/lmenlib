@@ -1,0 +1,184 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.slib</groupId>
+		<artifactId>slib</artifactId>
+		<version>4.2.0</version>
+	</parent>
+
+	<groupId>com.slib.rmt</groupId>
+	<artifactId>slib-rmt-backtesting</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- 
+		This Pom besides the normal working also packages the back testing application in a UBER-jar 
+		and deploys the Uber-jar plus a shell script to start the application in a linux server via the SSH.
+		
+		To package and deploy: 
+		    check the next properties and execute the command line:
+		     mvn -Ddeploy.linux.user.pwd=<password for the user> package  
+		  
+	 -->
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		
+		<!-- Properties to control the way the deployment is made -->			
+		<deploy.linux.user>root</deploy.linux.user>
+		
+		<!-- This property should be given via java system arguments
+		 <deploy.linux.user.pwd></deploy.linux.user.pwd> 
+		 -->
+				
+		<deploy.linux.server>XICITPVC1.iat.slib-exp.com</deploy.linux.server>
+		<deploy.linux.server.dest.dir>/home/rmt/backtesting</deploy.linux.server.dest.dir>
+		<deploy.linux.server.java.home.dir>/home/rmt/perf/rmt-dist-all/slib-module-rmt-var/bin/java</deploy.linux.server.java.home.dir>
+		<deploy.linux.server.owner.group>xld_000:users</deploy.linux.server.owner.group> 
+		
+	</properties>
+
+	<build>
+
+		<!-- UberJar packaging -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.slib.rmt.backtesting.Main</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Send the uber-jar to  the linux server -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>				
+				<configuration>
+					<tasks>
+					 
+					 	<!-- tries to create the bin sub-directory. If already exists no problem -->
+						<sshexec host="${deploy.linux.server}" username="${deploy.linux.user}" password="${deploy.linux.user.pwd}" trust="true"  verbose="true"  failonerror="false"
+						        command="mkdir ${deploy.linux.server.dest.dir}/bin"  />
+					 
+					 	<!-- copies the jar file into the bin directory -->
+						<scp todir="${deploy.linux.user}@${deploy.linux.server}:${deploy.linux.server.dest.dir}/bin" port="22"  trust="true"  password="${deploy.linux.user.pwd}"  failonerror="true" verbose="true" >
+							<fileset dir="target">
+								<include name="${project.build.finalName}.${project.packaging}" /> 
+							</fileset>
+						</scp> 
+						
+						<!--  Creates the shell script from the template file and replaces the template variables --> 										
+						<copy 	file="${basedir}/src/test/resources/template_backtesting.sh"  toFile="${basedir}/target/backtesting.sh"	overwrite="true" />
+						<replace file="${basedir}/target/backtesting.sh"  token="@@DEPLOY_BASE_DIR@@" value="${deploy.linux.server.dest.dir}" />
+						<replace file="${basedir}/target/backtesting.sh"  token="@@DEPLOY_JAVA_HOME_DIR@@" value="${deploy.linux.server.java.home.dir}" />
+						<replace file="${basedir}/target/backtesting.sh"  token="@@MAVEN_APP_JAR_NAME@@"  value="${project.build.finalName}.${project.packaging}" />
+																		
+						<!-- DEPLOYS the shell script -->
+						<scp todir="${deploy.linux.user}@${deploy.linux.server}:${deploy.linux.server.dest.dir}" port="22"  trust="true"  password="${deploy.linux.user.pwd}"  failonerror="true" verbose="true" >
+							<fileset dir="${basedir}/target">
+								<include name="backtesting.sh" /> 
+							</fileset>
+						</scp>
+						
+						<!-- Convert the shell script file to unix mode -->
+						<sshexec host="${deploy.linux.server}" username="${deploy.linux.user}" password="${deploy.linux.user.pwd}" trust="true"  verbose="true" 
+						        command="dos2unix ${deploy.linux.server.dest.dir}/backtesting.sh"  />
+						        
+						<!-- Give excecution permissions to the schell script  -->
+						<sshexec host="${deploy.linux.server}" username="${deploy.linux.user}" password="${deploy.linux.user.pwd}" trust="true"  verbose="true" 
+						        command="chmod u+x ${deploy.linux.server.dest.dir}/backtesting.sh"  /> 						        
+						
+						<!-- Change the owner group of all files  -->
+						<sshexec host="${deploy.linux.server}" username="${deploy.linux.user}" password="${deploy.linux.user.pwd}" trust="true"  verbose="true" 
+						        command="chown -R  ${deploy.linux.server.owner.group} ${deploy.linux.server.dest.dir}"  />
+						        
+					</tasks>
+				</configuration>
+				<executions>
+					<execution>
+						<id>scp</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.jcraft</groupId>
+						<artifactId>jsch</artifactId>
+						<version>0.1.53</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-jsch</artifactId>
+						<version>1.9.6</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+			<version>5.15.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.6</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>4.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>

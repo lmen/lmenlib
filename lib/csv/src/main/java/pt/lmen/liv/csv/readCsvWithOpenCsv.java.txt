@@ -1,0 +1,10 @@
+main 
+
+final CSVParser parser = new CSVParserBuilder().withSeparator( ';' ).build();
+            // skip the header row
+            final CSVReader csvReader = new CSVReaderBuilder(reader).withCSVParser(parser).build();            
+            CSVIterator iterator = new CSVIterator( csvReader );
+            
+            while ( iterator.hasNext() ) {
+				String[] columns = iterator.next();
+			}

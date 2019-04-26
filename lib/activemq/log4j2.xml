@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+	<Properties>
+		<Property name="LOGS_FOLDER">logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+      		<PatternLayout pattern="%d %p : %m %ex [%C]%n"/>
+    	</Console>
+    	
+    	<RollingFile name="simulation_log" fileName="${sys:LOGS_FOLDER}/simulation.log" filePattern="${sys:LOGS_FOLDER}/simulation-%d{yyyy-MM-dd}.log" append="false">
+            <PatternLayout>
+                <Pattern>%d %p : %m %ex [%C]%n</Pattern>
+            </PatternLayout>
+            <Policies>
+            	 <OnStartupTriggeringPolicy />
+        		 <SizeBasedTriggeringPolicy size="10 MB" />
+        		<TimeBasedTriggeringPolicy />                
+            </Policies>
+        </RollingFile>
+    		
+	</Appenders>
+	<Loggers>
+		<Root level="TRACE" >
+			<AppenderRef ref="simulation_log" />
+		</Root>
+	</Loggers>
+</Configuration>
