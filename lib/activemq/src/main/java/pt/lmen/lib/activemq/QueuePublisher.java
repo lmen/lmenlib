@@ -1,4 +1,4 @@
-package com.slib.rmt.backtesting.externalsystems.jms;
+package pt.lmen.lib.activemq;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +14,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class VarInputQueuePublisher {
+public class QueuePublisher {
     
-    private static final Logger logger = LogManager.getLogger( VarInputQueuePublisher.class );
+    private static final Logger logger = LogManager.getLogger( QueuePublisher.class );
     
     private MessageProducer msgProd;
     private Session session;
@@ -24,7 +24,7 @@ public class VarInputQueuePublisher {
     private String url; 
     private String queueName;
     
-    public void start(VarJmsConfig config) throws JMSException {
+    public void start(JmsConfig config) throws JMSException {
         
         url = config.getUrl();
         queueName = config.getQueueInName();
@@ -62,8 +62,8 @@ public class VarInputQueuePublisher {
     }
 
     public static void main( String[] args ) throws JMSException {
-        VarInputQueuePublisher pub = new VarInputQueuePublisher();
-        pub.start(new VarJmsConfig());
+        QueuePublisher pub = new QueuePublisher();
+        pub.start(new JmsConfig());
         pub.send( "dsds "  + LocalDateTime.now());
         pub.send( "second " + LocalDateTime.now() );
         pub.close();

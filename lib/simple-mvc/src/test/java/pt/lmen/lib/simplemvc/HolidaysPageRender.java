@@ -1,4 +1,4 @@
-package com.slib.var.webapp.pages.holidays;
+package pt.lmen.lib.simplemvc;
 
 import static j2html.TagCreator.h1;
 import static j2html.TagCreator.h2;
@@ -6,18 +6,10 @@ import static j2html.TagCreator.h2;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.slib.var.core.holidays.HolidaysStore.HolidaysSet;
-import com.slib.var.webapp.mvc.AbstractPageRenderer;
-import com.slib.var.webapp.mvc.PageState;
-import com.slib.var.webapp.mvc.PageTemplate;
-import com.slib.var.webapp.mvc.Partials;
-import com.slib.var.webapp.mvc.Sequence;
-import com.slib.var.webapp.pages.holidays.HolidaysModel.MarketHolidays;
-
 import j2html.tags.ContainerTag;
 import j2html.tags.DomContent;
+import pt.lmen.lib.simplemvc.HolidaysModel.HolidaysSet;
+import pt.lmen.lib.simplemvc.HolidaysModel.MarketHolidays;
 
 class HolidaysPageRender extends AbstractPageRenderer<HolidaysModel> {
 
@@ -59,7 +51,7 @@ class HolidaysPageRender extends AbstractPageRenderer<HolidaysModel> {
             String daysList = null; 
             List<LocalDate> days = hSet.getDays();
             if (days != null) {
-                daysList = StringUtils.join( days, ", " );
+                daysList = days.toString();
             } else {
                 daysList  =  "none";
             }
@@ -93,7 +85,7 @@ class HolidaysPageRender extends AbstractPageRenderer<HolidaysModel> {
                 
                 List<LocalDate> days = hSet.getDays();
                 if (days != null) {                    
-                   daysList = StringUtils.join( days, ", " );
+                   daysList = days.toString();
                 } else {
                     daysList = "none";
                 }

@@ -1,10 +1,10 @@
-package com.slib.rmt.backtesting.externalsystems.jms;
+package pt.lmen.lib.activemq;
 
-public class VarJmsConfig {
+public class JmsConfig {
 
     private String url = "failover://(tcp://localhost:61616)";
-    private String queueInName = "VAR_IN_BT";
-    private String queueOutName = "VAR_OUT_BT";
+    private String queueInName = "IN_BT";
+    private String queueOutName = "OUT_BT";
     private long timeout = 30 * 1000;
 
     public long getTimeout() {

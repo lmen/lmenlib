@@ -1,4 +1,4 @@
-package com.slib.var.webapp.mvc;
+package pt.lmen.lib.simplemvc;
 
 public abstract class AbstractPageRenderer<M extends Model> {
 

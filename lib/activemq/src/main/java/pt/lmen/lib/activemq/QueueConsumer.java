@@ -1,4 +1,4 @@
-package slib.rmt.tools.injector;
+package pt.lmen.lib.activemq;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;

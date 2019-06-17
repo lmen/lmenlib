@@ -1,4 +1,4 @@
-package com.slib.var.webapp.mvc;
+package pt.lmen.lib.simplemvc;
 
 import static j2html.TagCreator.div;
 import static j2html.TagCreator.each;
@@ -122,7 +122,7 @@ public class Partials {
                    tr(
                        each( Arrays.asList( headers ), s -> th(s) ) 
                    )
-                ).withClass( "var_table" );                       
+                ).withClass( "app_table" );                       
         }
 
         public static ContainerTag row( Object... values ) {

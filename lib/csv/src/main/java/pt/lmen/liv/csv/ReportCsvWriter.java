@@ -1,14 +1,13 @@
-package com.slib.rmt.batch.reporting;
+package pt.lmen.liv.csv;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.opencsv.CSVWriter;
-import com.slib.rmt.batch.reporting.reports.ObjFormater;
+import pt.lmen.lib.core.M;
 
 public class ReportCsvWriter implements Closeable {
 
@@ -32,12 +31,12 @@ public class ReportCsvWriter implements Closeable {
 
     public ReportCsvWriter col( String header, String value ) {
         headerRow.add( header );
-        row.add( ObjFormater.toEmptyStr( value ) );
+        row.add( M.strOrEmpty(value ) );
         return this;
     }
 
     public ReportCsvWriter col( String value ) {
-        row.add( ObjFormater.toEmptyStr( value ) );
+        row.add( M.strOrEmpty( value ) );
         return this;
     }
 

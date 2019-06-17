@@ -1,9 +1,9 @@
-package com.slib.rmt.backtesting.externalsystems.webservices;
+package pt.lmen.lib.httpclient;
 
-public class VarWSConfig {
+public class WSConfig {
 
     private int timeOutMs = 5 * 1000;
-    private String varBaseUrl = "http://localhost:8080/var";
+    private String appBaseUrl = "http://localhost:8080/app";
     private String user;
     private String pwd;
 
@@ -15,15 +15,15 @@ public class VarWSConfig {
         this.timeOutMs = timeOutMs;
     }
 
-    public String getVarBaseUrl() {
-        return varBaseUrl;
-    }
+    public String getAppBaseUrl() {
+		return appBaseUrl;
+	}
 
-    public void setVarBaseUrl( String varBaseUrl ) {
-        this.varBaseUrl = varBaseUrl;
-    }
+	public void setAppBaseUrl(String appBaseUrl) {
+		this.appBaseUrl = appBaseUrl;
+	}
 
-    public String getUser() {
+	public String getUser() {
         return user;
     }
 

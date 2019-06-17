@@ -1,4 +1,4 @@
-package com.slib.rmt.backtesting.utils;
+package pt.lmen.lib.core.patterns;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

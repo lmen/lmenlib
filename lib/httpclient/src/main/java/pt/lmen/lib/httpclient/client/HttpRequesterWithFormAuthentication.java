@@ -1,4 +1,4 @@
-package com.slib.rmt.backtesting.externalsystems.webservices.client;
+package pt.lmen.lib.httpclient.client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public final class HttpRequesterWithFormAuthentication {
                 EntityUtils.consumeQuietly( response.getEntity() );
                 if ( statusCode != 200 && statusCode != 302 ) {
                     EntityUtils.consumeQuietly( response.getEntity() );
-                    throw new Exception( "VAR Response with the form authentication page was not found" );
+                    throw new Exception( "Server Response with the form authentication page was not found" );
                 }
             } finally {
                 response.close();
@@ -75,12 +75,12 @@ public final class HttpRequesterWithFormAuthentication {
 
                 String res = EntityUtils.toString( response.getEntity() );
                 if ( statusCode != 200 ) {
-                    logger.error( "Var server has returned the response {} -  {}", statusCode, res );
-                    throw new Exception( "VAR Response with web service was not ok" );
+                    logger.error( "Server server has returned the response {} -  {}", statusCode, res );
+                    throw new Exception( "Server Response with web service was not ok" );
                 } else {
                     // Just check if the reply is from the webservice method it self
                     if ( !res.contains( "[WS_HIST_RESTET]" ) ) {
-                        logger.error( "Var server has returned the response {} -  {}", statusCode, res );
+                        logger.error( "Server server has returned the response {} -  {}", statusCode, res );
                         throw new Exception( "Response with the form authentication page was not found" );
                     }
                 }

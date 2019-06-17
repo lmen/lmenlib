@@ -1,4 +1,4 @@
-package slib.rmt.tools.injector;
+package pt.lmen.lib.httpclient;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -60,12 +60,12 @@ public class BulkHttpPostInjector implements Closeable {
         CloseableHttpResponse response = closeableHttpClient.execute( httpPut );
         try {
             int statusCode = response.getStatusLine().getStatusCode();
-            System.out.println( "The status code from Response from Var server about history reset is " + statusCode );
+            System.out.println( "The status code from Response from server is " + statusCode );
             if ( statusCode != 200 && statusCode != 201 ) {
-                throw new Exception( "Response from Var is not ok: " + EntityUtils.toString( response.getEntity() ) );
+                throw new Exception( "Response from server is not ok: " + EntityUtils.toString( response.getEntity() ) );
             }
             String content = EntityUtils.toString( response.getEntity() );
-            System.out.println( "Response from Var server about history reset is " + content );
+            System.out.println( "Response from server is " + content );
         }
         finally {
             response.close();
@@ -81,10 +81,10 @@ public class BulkHttpPostInjector implements Closeable {
     }
     
     public static void main( String[] args ) throws IOException, Exception {
-        try (BulkHttpPostInjector in = new BulkHttpPostInjector("https://vmxpocdlk06.uat.slib-exp.com:9200"  )) {
+        try (BulkHttpPostInjector in = new BulkHttpPostInjector("https://sdd.com:9201"  )) {
             in.start();
-            in.post( "rmt_expositions/type_rmt_expositions/dsd2", "{\"ds\":\"ds\"}" );
-            in.post( "rmt_expositions/type_rmt_expositions/dsd3", "{\"ds\":\"ds\"}" );
+            in.post( "app_data/type_app_data/inde22", "{\"ds2\":\"ds2\"}" );
+            in.post( "app_data/type_app_data/inde34", "{\"ds2\":\"ds2\"}" );
         }
                 
     }

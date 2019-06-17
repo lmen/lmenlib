@@ -1,4 +1,4 @@
-package slib.rmt.tools.injector;
+package pt.lmen.lib.httpclient;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -25,7 +25,7 @@ import org.apache.http.util.EntityUtils;
 public class OneTimeHttpsPostInjector {
 
     public static void main( String[] args ) throws IOException, Exception {
-        OneTimeHttpsPostInjector.post( "https://vmxpocdlk06.uat.slib-exp.com:9200/rmt_expositions/type_rmt_expositions/23", "{\"ds\":\"ds\"}" );
+        OneTimeHttpsPostInjector.post( "https://ssd.com:9200/app_data/type_app_data/123", "{\"vssd\":\"dsfss\"}" );
     }
 
     private static CloseableHttpClient newHttpClientA() throws KeyManagementException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException {
@@ -42,7 +42,7 @@ public class OneTimeHttpsPostInjector {
     }
 
     public static void insert( String index, String type, String id, JsonObject obj ) throws Exception {
-        String url = String.format( "https://vmxpocdlk06.uat.slib-exp.com:9200/%s/%s/%s", index, type, id );
+        String url = String.format( "https://sdd.com:9200/%s/%s/%s", index, type, id );
         post( url, obj.toString() );
     }
 
@@ -55,12 +55,12 @@ public class OneTimeHttpsPostInjector {
             CloseableHttpResponse response = httpclient.execute( httpPut );
             try {
                 int statusCode = response.getStatusLine().getStatusCode();
-                System.out.println( "The status code from Response from Var server about history reset is " + statusCode );
+                System.out.println( "The status code from Response from server is " + statusCode );
                 if ( statusCode != 200 && statusCode != 201 ) {
-                    throw new Exception( "Response from Var is not ok: " + EntityUtils.toString( response.getEntity() ) );
+                    throw new Exception( "Response from server is not ok: " + EntityUtils.toString( response.getEntity() ) );
                 }
                 String content = EntityUtils.toString( response.getEntity() );
-                System.out.println( "Response from Var server about history reset is " + content );
+                System.out.println( "Response from server is: " + content );
             }
             finally {
                 response.close();

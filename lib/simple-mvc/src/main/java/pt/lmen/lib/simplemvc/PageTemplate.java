@@ -1,4 +1,4 @@
-package com.slib.var.webapp.mvc;
+package pt.lmen.lib.simplemvc;
 
 import static j2html.TagCreator.a;
 import static j2html.TagCreator.body;
@@ -17,7 +17,7 @@ public final class PageTemplate {
     } 
     
     private static String h( String m ) {
-        String context = "/var/admin/";
+        String context = "/app/admin/";
         return context + m;
     }
 
@@ -25,13 +25,9 @@ public final class PageTemplate {
 
         return div(
             ul(
-                li(a("History").withHref( h("history" ))),
-                li(a("Refresh from REF").withHref( h("manualyRefRefresh" ))),
-                li(a("Refresh from file").withHref( h("csvFileImport" ))),
-                li(a("History Exporter").withHref( h("exportMktHistory" ))),
-                li(a("Ref Static GetSecurities").withHref( h("refstaticgetsecurities" ))),
-                li(a("Ref Static GetQuotes").withHref( h("refstaticgetquotes" ))),
-                li(a("Holidays").withHref( h("holidays" )))
+                li(a("menu1").withHref( h("menu1.pag" ))),
+                li(a("menu2").withHref( h("menu2.pag" ))),                
+                li(a("menu3").withHref( h("menu3.pag" )))
                 
             ).withClasses( "horizontal_list" )    
          );

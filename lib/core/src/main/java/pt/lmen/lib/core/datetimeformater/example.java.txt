@@ -1,1 +1,1 @@
-public static final RmtDateParserFormatThreadSafe SDF_DATE_HOUR_MILLIS_PATTERN   = new TimeZoneDateFormatter( DATE_HOUR_MILLIS_PATTERN  , false, TimeZone.getDefault()  );
+public static final GeneralDateParserFormatThreadSafe SDF_DATE_HOUR_MILLIS_PATTERN   = new TimeZoneDateFormatter( DATE_HOUR_MILLIS_PATTERN  , false, TimeZone.getDefault()  );

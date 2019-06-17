@@ -1,4 +1,4 @@
-package slib.rmt.tools;
+package pt.lmen.lib.httpclient.client;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -22,10 +22,10 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 
-public class A {
+public class https_with_autentication {
 
     public static void main( String[] args ) throws IOException, Exception {
-        HttpRequesterWithoutAuthentication.post( "https://vmxpocdlk06.uat.slib-exp.com:9200/rmt_expositions/type_rmt_expositions/23", "{\"ds\":\"ds\"}" );
+        HttpRequesterWithoutAuthentication.post( "https://server.com:9200/json/type_index/23", "{\"ds\":\"ds\"}" );
     } 
     
     private static final class HttpRequesterWithoutAuthentication {
@@ -59,12 +59,12 @@ public class A {
                 CloseableHttpResponse response = httpclient.execute( httpPut );
                 try {
                     int statusCode = response.getStatusLine().getStatusCode();
-                    System.out.println(  "The status code from Response from Var server about history reset is " + statusCode );
+                    System.out.println(  "The status code from Response from server is " + statusCode );
                     if ( statusCode != 200 && statusCode != 201 ) {
-                        throw new Exception( "Response from Var is not ok: " + EntityUtils.toString(  response.getEntity() ));
+                        throw new Exception( "Response from server is not ok: " + EntityUtils.toString(  response.getEntity() ));
                     }
                     String content = EntityUtils.toString( response.getEntity() );
-                    System.out.println( "Response from Var server about history reset is " +  content );
+                    System.out.println( "Response from server is " +  content );
                 } finally {
                     response.close();
                 }

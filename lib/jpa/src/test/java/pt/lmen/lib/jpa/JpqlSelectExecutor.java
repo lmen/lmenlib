@@ -2,22 +2,24 @@ package pt.lmen.lib.jpa;
 
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-
-import com.slib.rmt.soa.dao.GenericDao;
 
 @ApplicationScoped
 public class JpqlSelectExecutor {
 
-    @EJB
-    private GenericDao ejb; 
+	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "Eclipselink_JPA" );
+    
+    EntityManager entitymanager = emfactory.createEntityManager( );
+	     
     
     public  Long execCountQuery(JpqlSelect jpql) {
         String jpa = jpql.renderCount();
         
-        TypedQuery<Long> query = ejb.getEntityManager().createQuery( jpa, Long.class );
+        TypedQuery<Long> query = entitymanager.createQuery( jpa, Long.class );
         
         fillQueryParameters( jpql, query );
         
@@ -35,7 +37,7 @@ public class JpqlSelectExecutor {
     public <T> List<T> execPagQuery(JpqlSelect jpql, Class<T> clazz, int firstResult, int length) {
         String jpa = jpql.renderJPa();
         
-        TypedQuery<T> query = ejb.getEntityManager().createQuery( jpa, clazz );
+        TypedQuery<T> query = entitymanager.createQuery( jpa, clazz );
         
         fillQueryParameters( jpql, query );
         
@@ -64,7 +66,7 @@ public class JpqlSelectExecutor {
     public <T> TypedQuery<T> createQuery(JpqlSelect jpql, Class<T> clazz) {
         String jpa = jpql.renderJPa();
         
-        TypedQuery<T> query = ejb.getEntityManager().createQuery( jpa, clazz );
+        TypedQuery<T> query = entitymanager.createQuery( jpa, clazz );
         
         fillQueryParameters( jpql, query );
         
@@ -74,7 +76,7 @@ public class JpqlSelectExecutor {
     public <T> TypedQuery<T> createCountQuery(JpqlSelect jpql, Class<T> clazz) {
         String jpa = jpql.renderCount();
         
-        TypedQuery<T> query = ejb.getEntityManager().createQuery( jpa, clazz );
+        TypedQuery<T> query = entitymanager.createQuery( jpa, clazz );
         
         fillQueryParameters( jpql, query );
         

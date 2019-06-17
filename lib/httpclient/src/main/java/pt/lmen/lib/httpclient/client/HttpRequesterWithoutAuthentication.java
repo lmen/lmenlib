@@ -1,4 +1,4 @@
-package com.slib.rmt.backtesting.externalsystems.webservices.client;
+package pt.lmen.lib.httpclient.client;
 
 import java.io.IOException;
 
@@ -23,13 +23,13 @@ public final class HttpRequesterWithoutAuthentication {
             CloseableHttpResponse response = httpclient.execute( httpPost );
             try {
                 int statusCode = response.getStatusLine().getStatusCode();
-                logger.info( "The status code from Response from Var server about history reset is {}", statusCode );
+                logger.info( "The status code from Response from server is {}", statusCode );
                 if ( statusCode != 200 ) {
                     EntityUtils.consumeQuietly( response.getEntity() );
-                    throw new Exception( "Response from Var is not ok" );
+                    throw new Exception( "Response from server is not ok" );
                 }
                 String content = EntityUtils.toString( response.getEntity() );
-                logger.debug( "Response from Var server about history reset is {}", content );
+                logger.debug( "Response from  server is {}", content );
             } finally {
                 response.close();
             }

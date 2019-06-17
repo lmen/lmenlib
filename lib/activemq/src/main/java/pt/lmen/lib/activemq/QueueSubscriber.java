@@ -1,4 +1,4 @@
-package com.slib.rmt.backtesting.externalsystems.jms;
+package pt.lmen.lib.activemq;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +14,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class VarOutputQueueSubscriber {
+public class QueueSubscriber {
     
-    private static final Logger logger = LogManager.getLogger( VarOutputQueueSubscriber.class );
+    private static final Logger logger = LogManager.getLogger( QueueSubscriber.class );
     
     private MessageConsumer msgConsumer;
     private Session session;
@@ -25,7 +25,7 @@ public class VarOutputQueueSubscriber {
     private String queueName;
     private long timeout;
     
-    public void start(VarJmsConfig config) throws JMSException {
+    public void start(JmsConfig config) throws JMSException {
         
         url = config.getUrl();
         queueName = config.getQueueOutName();
@@ -74,9 +74,9 @@ public class VarOutputQueueSubscriber {
     }
 
     public static void main( String[] args ) throws JMSException {
-        VarOutputQueueSubscriber sub = new VarOutputQueueSubscriber();
-        VarInputQueuePublisher pub = new VarInputQueuePublisher();
-        VarJmsConfig config = new VarJmsConfig();
+        QueueSubscriber sub = new QueueSubscriber();
+        QueuePublisher pub = new QueuePublisher();
+        JmsConfig config = new JmsConfig();
         config.setQueueInName( "AAA" );
         config.setQueueOutName( config.getQueueInName() );
         pub.start(config);
