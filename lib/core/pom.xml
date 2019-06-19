@@ -3,19 +3,11 @@
          
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>pt.lmen.lib</groupId>
+    <groupId>com.github.lmen</groupId>
     <artifactId>lib</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>core</artifactId>
-  
-  <dependencies>
-  	<!-- <dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-lang3</artifactId>
-	    <version>3.9</version>
-	</dependency> -->
-  </dependencies>
-  
+  <artifactId>lib-core</artifactId>
+    
 </project>

@@ -3,12 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>pt.lmen.lib</groupId>
+    <groupId>com.github.lmen</groupId>
     <artifactId>lib</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>csv</artifactId>
+  <artifactId>lib-csv</artifactId>
   
   <name>csv</name>
   <url>http://maven.apache.org</url>
@@ -37,8 +37,8 @@
 	</dependency>
     
     <dependency>
-    	<groupId>pt.lmen.lib</groupId>
-    	<artifactId>core</artifactId>
+    	<groupId>com.github.lmen</groupId>
+    	<artifactId>lib-core</artifactId>
     	<version>${project.version}</version>
     </dependency>
     
