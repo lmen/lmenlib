@@ -37,9 +37,9 @@
 	</dependency>
     
     <dependency>
-    	<groupId>com.github.lmen</groupId>
-    	<artifactId>lib-core</artifactId>
-    	<version>${project.version}</version>
+    	<groupId>com.github.lmen.lmenlib</groupId>
+    	<artifactId>core</artifactId>
+    	<version>0.0.4</version>
     </dependency>
     
   </dependencies>

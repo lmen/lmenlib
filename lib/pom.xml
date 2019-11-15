@@ -25,8 +25,7 @@
     </dependency>
   </dependencies>
   
-  <modules>
-  	<module>lib-core</module>
+  <modules>  	
     <module>lib-jpa</module>
     <module>lib-csv</module>
     <module>lib-httpclient</module>

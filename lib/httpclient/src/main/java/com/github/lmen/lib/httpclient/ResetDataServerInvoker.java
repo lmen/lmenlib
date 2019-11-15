@@ -8,12 +8,11 @@ import org.apache.logging.log4j.Logger;
 import com.github.lmen.lib.httpclient.client.HttpRequesterWithFormAuthentication;
 
 
-
 public class ResetDataServerInvoker {
 
-    private static final String FORM_AUTENTICATION_ACTION = "/app/admin/j_security_check";
+    private static final String FORM_AUTENTICATION_ACTION = "/app/j_security_check";
 
-    private static final String WS_HISTORY_RESET = "/app/ws/data/reset";
+    private static final String WS_DESTINATION_ENDPOINT = "/app/ws/dostuf";
 
     private static final String UTF_8 = "UTF-8";
 
@@ -29,7 +28,7 @@ public class ResetDataServerInvoker {
 
         String param = String.format( "mic=%s&f=%s", URLEncoder.encode( table, UTF_8 ),
             URLEncoder.encode( fileName, UTF_8 ) );
-        String url = String.format( "%s%s?%s", wSConfig.getAppBaseUrl(), WS_HISTORY_RESET, param );
+        String url = String.format( "%s%s?%s", wSConfig.getAppBaseUrl(), WS_DESTINATION_ENDPOINT, param );
 
         String urlFormAuthencticationPage = String.format( "%s%s", wSConfig.getAppBaseUrl(),
             FORM_AUTENTICATION_ACTION );
@@ -47,10 +46,10 @@ public class ResetDataServerInvoker {
         WSConfig wSConfig = new WSConfig();
         wSConfig.setAppBaseUrl( "http://localhost:8081" );
         wSConfig.setUser( "admin" );
-        wSConfig.setPwd( "admin" );
+        wSConfig.setPwd( "1" );
         
         ResetDataServerInvoker request = new ResetDataServerInvoker( wSConfig );
-        request.requestHistoryReset( "table1", "record.csv" );
+        request.requestHistoryReset( "table2", "file.csv" );
     }
 
 }

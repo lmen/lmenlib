@@ -16,7 +16,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
-public class Transformer {
+public class CsvToJsonTransformer {
 
     private static final Consumer<JsonObjectBuilder> NO_OP = b -> {
     };
@@ -62,7 +62,7 @@ public class Transformer {
             + "benfica;samaris;\n"
             + "benfica;ruben dias;";
 
-        Transformer.transformCsvToJson( t, ( json -> System.out.println( json.toString() ) ), NO_OP );
+        CsvToJsonTransformer.transformCsvToJson( t, ( json -> System.out.println( json.toString() ) ), NO_OP );
     }
 
 }
